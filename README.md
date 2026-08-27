@@ -88,14 +88,15 @@ It teaches Claude how to combine Three.js, GSAP ScrollTrigger, React Three Fiber
 
 Claude Code — CLI, Desktop app, and IDE extensions alike — loads skills from the same two locations on disk. The install steps are identical across all of them; only the shell commands differ by OS. The skill folder must sit **directly** inside `skills/` — `skills/claude3Dscroll/SKILL.md`, not nested inside an extra wrapping folder.
 
-| Location | Scope |
-|---|---|
-| `<project>/.claude/skills/claude3Dscroll/` | Available only inside that one project |
+| Location                                                                            | Scope                                      |
+| ----------------------------------------------------------------------------------- | ------------------------------------------ |
+| `<project>/.claude/skills/claude3Dscroll/`                                        | Available only inside that one project     |
 | `~/.claude/skills/claude3Dscroll/` (`%USERPROFILE%\.claude\skills\` on Windows) | Available in every project on your machine |
 
 ### Claude Code — terminal / CLI
 
 **Windows (PowerShell), project-scoped:**
+
 ```powershell
 cd "<your-project-root>"
 New-Item -ItemType Directory -Force -Path ".claude\skills" | Out-Null
@@ -103,12 +104,14 @@ git clone https://github.com/Cognivexa/Skill-Claude3Dscroll ".claude\skills\clau
 ```
 
 **Windows (PowerShell), global — every project:**
+
 ```powershell
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills" | Out-Null
 git clone https://github.com/Cognivexa/Skill-Claude3Dscroll "$env:USERPROFILE\.claude\skills\claude3Dscroll"
 ```
 
 **macOS / Linux, project-scoped:**
+
 ```bash
 cd "<your-project-root>"
 mkdir -p .claude/skills
@@ -116,12 +119,14 @@ git clone https://github.com/Cognivexa/Skill-Claude3Dscroll .claude/skills/claud
 ```
 
 **macOS / Linux, global — every project:**
+
 ```bash
 mkdir -p ~/.claude/skills
 git clone https://github.com/Cognivexa/Skill-Claude3Dscroll ~/.claude/skills/claude3Dscroll
 ```
 
 Then, in the same terminal, start (or restart) a session in your project:
+
 ```bash
 cd "<your-project-root>"
 claude
@@ -145,11 +150,13 @@ The Desktop app reads skills from the exact same `.claude/skills` locations as t
 ```bash
 ls .claude/skills/claude3Dscroll
 ```
+
 You should see `SKILL.md`, `references`, `scripts`, and `assets` listed directly.
 
 ## Using it
 
 Two ways to invoke it, in the CLI or the Desktop app alike:
+
 - **Explicitly:** `/claude3Dscroll build a scroll-driven 3D landing page for <your idea>`
 - **Implicitly:** describe the task in plain language — e.g. "build me an animated 3D product landing page with scroll effects." The skill's description is written to match that kind of request on its own.
 
@@ -168,12 +175,14 @@ npm run dev
 ```
 
 With the dev server running, in another terminal:
+
 ```bash
 npm install -D playwright
 npx playwright install chromium
 cp ../claude3Dscroll/scripts/verify_scroll_page.mjs .
 node verify_scroll_page.mjs http://localhost:5173 --steps 20 --out qa-report
 ```
+
 Open `qa-report/report.html` in a browser for the scroll contact sheet and anything it flagged.
 
 ## License
