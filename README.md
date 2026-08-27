@@ -52,12 +52,27 @@ It teaches Claude how to combine Three.js, GSAP ScrollTrigger, React Three Fiber
 │   ├── design-craft.md             the design bar — grammar, type, color, depth,
 │   │                                 the "don't ship this" list, differentiation check
 │   ├── qa-verification.md          reading and acting on the verification report
-│   └── asset-sourcing.md           free, commercial-use 3D models, HDRIs, textures,
-│                                     and video, plus the renderer/post-processing
-│                                     baseline that keeps a scene from looking flat
+│   ├── asset-sourcing.md           free, commercial-use 3D models, HDRIs, textures,
+│   │                                 and video, plus the renderer/post-processing
+│   │                                 baseline that keeps a scene from looking flat
+│   ├── threejs-r3f.md              core Three.js/R3F engineering patterns
+│   ├── scroll-animation.md         the scroll-driver system: one scroll source,
+│   │                                 damped camera, section timelines
+│   ├── animation-system.md         Mixamo/character animation, camera choreography
+│   ├── asset-licensing.md          deep per-source licensing rules + manifest format
+│   ├── shaders.md                  when GLSL is justified, plus effect recipes
+│   ├── responsive-3d.md            device-tier policy, adaptive quality, fallback
+│   ├── accessibility.md            reduced motion, keyboard, semantic HTML, ARIA
+│   ├── visual-design.md            directing the 3D scene itself as a shot
+│   ├── debugging.md                systematic symptom-first troubleshooting
+│   ├── quality-checklist.md        the consolidated pre-ship checklist
+│   └── experience-modes.md         campus/school tours, product showcases,
+│                                     architectural walkthroughs
 ├── scripts/
 │   ├── scaffold_project.py         generates a working starter project
-│   └── verify_scroll_page.mjs      headless-browser scroll verification (Playwright)
+│   ├── verify_scroll_page.mjs      headless-browser scroll verification (Playwright)
+│   └── audit_assets.py             scans asset sizes, flags oversized files,
+│                                     can emit a starter ASSET_LICENSES.md
 └── assets/
     └── starter-unified/            a checked-in copy of what the scaffold produces
 ```

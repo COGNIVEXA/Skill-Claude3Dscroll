@@ -1,6 +1,6 @@
 ---
 name: claude3Dscroll
-description: Skill for producing polished, scroll-driven, animated 3D websites by orchestrating Three.js, GSAP ScrollTrigger, React Three Fiber, Motion (Framer Motion), and React Spring together. Use it whenever a build needs more than one 3D/animation library at once, needs an opinionated architecture for wiring them together, or needs to actually look and feel premium rather than like a generic template. Fires on requests for 3D website builds, scroll-triggered storytelling, physics-driven motion, portfolio/agency/product pages with cinematic or interactive elements, or any task combining multiple rendering/animation libraries.
+description: Skill for producing polished, scroll-driven, animated 3D websites by orchestrating Three.js, GSAP ScrollTrigger, React Three Fiber, Motion (Framer Motion), and React Spring together. Use it whenever a build needs more than one 3D/animation library at once, needs an opinionated architecture for wiring them together, or needs to actually look and feel premium rather than like a generic template. Fires on requests for 3D website builds, scroll-triggered storytelling, physics-driven motion, portfolio/agency/product pages with cinematic or interactive elements, or any task combining multiple rendering/animation libraries. Also fires on WebGL/GLSL shader work, camera-driven scroll experiences, virtual campus/school/university tours, 3D product showcases and configurators, architectural/real-estate walkthroughs, character animation (Mixamo, animated GLB/glTF, animation state machines), interactive 3D scenes with clickable hotspots, and requests to build, redesign, prototype, debug, or optimize any immersive/interactive 3D web experience — including plain-language asks like "3D website," "immersive website," "virtual tour," or "WebGL experience" with no library named explicitly.
 ---
 
 # claude3Dscroll
@@ -18,6 +18,10 @@ Reach for it when the task involves:
 - Wiring together two or more of: Three.js, GSAP/ScrollTrigger, React Three Fiber, Motion, React Spring
 - Camera choreography, pinned/staged sections, frame-scrubbed video, physics-flavored interaction, or particle/shader work tied to scroll or pointer input
 - A brief along the lines of "make it feel premium / cinematic / high-end / not generic"
+- Character/object animation (Mixamo, animated GLB/glTF, idle/walk/run/gesture state machines) or authored camera choreography (establishing shots, dolly/orbit/fly-through, room transitions)
+- Custom GLSL/shader effects (fresnel, dissolve, portal, holographic, procedural surfaces) — or the judgment call on when a shader is actually justified over a standard material
+- A specialized experience type — virtual campus/school/university tour, 3D product showcase/configurator, or architectural/real-estate walkthrough (see `references/experience-modes.md`)
+- Making an existing or planned 3D build responsive across device tiers, accessible (`prefers-reduced-motion`, keyboard, screen readers), or debugging a specific symptom (black canvas, missing model, jittery camera, memory leak, etc.)
 
 For a narrow single-library question ("what's the config shape for `useSpring`?") you don't need this skill — go straight to the library. This skill earns its keep on the *combination* and on the *craft bar*, not as a substitute for each library's own docs.
 
@@ -39,6 +43,7 @@ Decide, or confirm with the requester if it's genuinely unclear:
 - What is the visitor supposed to feel or do, and what's the single idea the page needs to land?
 - Choose exactly one page structure/grammar from `references/design-craft.md` (cinematic single-take, chaptered narrative, live reactive surface, continuous 3D world, type-led poster, curated gallery, dual-pane stage, hard-cut sequence). These are mutually exclusive — committing to one rules out borrowing traits from another.
 - Choose a library combination using `references/decision-matrix.md`.
+- If the brief is a school/university campus tour, a product showcase/configurator, or an architectural/real-estate walkthrough, check `references/experience-modes.md` first — it lists the scenes, interactions, and planning tradeoffs specific to that project type before any generic architecture decision is made.
 
 ### 2. Scaffold a real project
 Use `scripts/scaffold_project.py` to spin up a working Vite + React + React Three Fiber + GSAP + Motion + Zustand starter (mirrored in `assets/starter-unified/`). Build the actual site inside this rather than starting from an empty file.
@@ -57,6 +62,11 @@ Match the pattern in `references/architecture-patterns.md` to the grammar and st
 
 Cross-library recipes (scroll-tied cameras, gesture handling, state-synced animation) live in `references/integration-recipes.md`. Shared-state practice (Zustand as the single source of truth the 3D layer and the DOM layer both read) lives in `references/state-management.md`.
 
+Whichever architecture is chosen, it's built on top of the same underlying layers, each with its own dedicated reference:
+- **Core Three.js/R3F engineering** (component decomposition, `useFrame`/`useThree` discipline, loaders, Suspense, instancing/LOD, color management, SSR) — `references/threejs-r3f.md`.
+- **The scroll-driver system itself** (picking one scroll source, GSAP/Lenis/`ScrollControls` wiring, normalized progress, damped camera interpolation, section-based timelines, pinned layouts, cross-scene transitions) — `references/scroll-animation.md`. This is the layer everything else in step 3 assumes is already solid.
+- **Character/object animation playback and camera choreography** (Mixamo pipeline, `AnimationMixer`/`useAnimations`, animation state machines, the shot vocabulary for authored camera moves) — `references/animation-system.md`.
+
 ### 4. Hold it to the design bar
 This step is not optional finishing polish — it's what separates a shippable site from a tech demo. Work through `references/design-craft.md` in full:
 - Write a feeling arc before building a single section
@@ -69,7 +79,9 @@ This step is not optional finishing polish — it's what separates a shippable s
 - Run the output against the "don't ship this" list before calling it finished
 - If this isn't the first build made with the skill, run it through the differentiation check so it doesn't converge on a prior build
 
-**Source real assets — don't hand-build what a free professional asset already covers.** A product, character, or realistic prop assembled from bare Three.js primitives (`BoxGeometry`, `TorusGeometry`) under flat default lighting reads as a wireframe mockup, not an HD render, no matter how the scroll behaves. Follow `references/asset-sourcing.md` for where to pull free, commercial-use-safe 3D models, HDRI environment lighting, PBR textures, and stock video/footage, and for the renderer/post-processing baseline (real environment lighting, tone mapping, bloom) that makes even a simple scene read as premium rather than flat.
+**Source real assets — don't hand-build what a free professional asset already covers.** A product, character, or realistic prop assembled from bare Three.js primitives (`BoxGeometry`, `TorusGeometry`) under flat default lighting reads as a wireframe mockup, not an HD render, no matter how the scroll behaves. Follow `references/asset-sourcing.md` for where to pull free, commercial-use-safe 3D models, HDRI environment lighting, PBR textures, and stock video/footage, and for the renderer/post-processing baseline (real environment lighting, tone mapping, bloom) that makes even a simple scene read as premium rather than flat. For the deeper per-source licensing rules, red flags, and the `ASSET_LICENSES.md` manifest format — needed whenever a source beyond the always-safe CC0 defaults is used — see `references/asset-licensing.md`.
+
+**Direct the 3D scene itself like a shot, not just the page around it.** `references/visual-design.md` covers composition, depth staging, light as the primary compositional tool, and camera-lens language specifically for the 3D content — narrower and more technical than `design-craft.md`'s page-level bar. Reach for custom GLSL (`references/shaders.md`) only when a standard material genuinely can't produce the effect — a dissolve/reveal transition, a portal/holographic look, animated vertex displacement; default to `MeshStandardMaterial`/`MeshPhysicalMaterial` plus real lighting otherwise.
 
 ### 5. Verify — bounded, not open-ended
 Run `scripts/verify_scroll_page.mjs` against the dev server or a deployed URL (see step 0 for when this step is worth the time it costs). It drives a real headless browser through the entire scroll range and reports, per position:
@@ -82,6 +94,17 @@ It produces a contact sheet (`qa-report/report.html`) so the entire scroll journ
 
 ### 6. Pass on performance and correctness
 Before calling anything finished, check `references/performance.md` (render-loop coordination, on-demand rendering, DPR ceilings, geometry/texture cleanup) and `references/pitfalls.md` (libraries stepping on the same property, React state drifting from the Three.js scene, leaked tweens/timers).
+
+### 7. Harden for every device and visitor, diagnose systematically, do a final pass
+This step covers the specialist ground beyond steps 4–6 — still governed by the same effort-matching rule from step 0 (a quick single-prompt build can take the lean versions of these; an explicit premium/agency-grade or "polish this" ask should work through all of them):
+- **Responsive across device tiers** — `references/responsive-3d.md`: a low/medium/high tiering policy (DPR, shadows, postprocessing, particle count, texture resolution, LOD) applied in one place rather than scattered `if (isMobile)` checks, plus runtime adaptive quality via Drei's `PerformanceMonitor`, and a designed fallback for WebGL-unsupported devices.
+- **Accessible by default** — `references/accessibility.md`: critical content must never live only inside the canvas, `prefers-reduced-motion` needs a genuinely different (not just shorter) experience, every 3D interaction needs a keyboard-reachable equivalent, and the `<canvas>` itself needs an `aria-label` or equivalent.
+- **When something's actually broken, diagnose systematically** — `references/debugging.md`: symptom-first troubleshooting (black canvas, missing model, CORS, missing/misnamed animation clips, Mixamo-specific issues, scroll desync, camera snapping, SSR/hydration errors, WebGL context loss, shader compile errors, z-fighting, memory leaks) instead of guessing at fixes.
+- **Audit asset weight before shipping** — `scripts/audit_assets.py` scans a project's asset folders for oversized GLB/glTF, texture, and video files against configurable size limits, and can emit a starter `ASSET_LICENSES.md` manifest (pairs with `references/asset-licensing.md`) and a JSON report for scripted checks:
+  ```bash
+  python scripts/audit_assets.py ./public --out audit-report.md --manifest ASSET_LICENSES.md
+  ```
+- **Final pre-ship pass** — `references/quality-checklist.md` consolidates all of the above plus the design bar and the automated scroll-verification report into one checklist across Visual/Performance/Interaction/Accessibility/Engineering/Licensing, so a last pass has one place to work through instead of re-deriving "done" from memory.
 
 ## What's bundled with this skill
 
@@ -98,12 +121,36 @@ claude3Dscroll/
 │   ├── design-craft.md             the design bar — grammar, type, color, depth,
 │   │                                the "don't ship this" list, differentiation check
 │   ├── qa-verification.md          reading and acting on the verification report
-│   └── asset-sourcing.md           free, commercial-use 3D models, HDRIs, textures,
-│                                    and video — plus the renderer/post-processing
-│                                    baseline that keeps a scene from looking flat
+│   ├── asset-sourcing.md           free, commercial-use 3D models, HDRIs, textures,
+│   │                                and video — plus the renderer/post-processing
+│   │                                baseline that keeps a scene from looking flat
+│   ├── threejs-r3f.md              core Three.js/R3F engineering: components,
+│   │                                useFrame/useThree, loaders, Suspense, SSR
+│   ├── scroll-animation.md         the scroll-driver system itself — one scroll
+│   │                                source, damped camera, section timelines
+│   ├── animation-system.md         Mixamo/character animation, state machines,
+│   │                                camera choreography shot vocabulary
+│   ├── asset-licensing.md          deep per-source licensing rules, red flags,
+│   │                                the ASSET_LICENSES.md manifest format
+│   ├── shaders.md                  when GLSL is justified, and effect recipes
+│   │                                (fresnel, dissolve, portal, transition masks)
+│   ├── responsive-3d.md            device-tier policy, adaptive quality, WebGL
+│   │                                fallback
+│   ├── accessibility.md            reduced motion, keyboard, semantic HTML,
+│   │                                canvas ARIA, contrast
+│   ├── visual-design.md            directing the 3D scene itself as a shot —
+│   │                                composition, light, camera-lens language
+│   ├── debugging.md                systematic symptom-first troubleshooting
+│   ├── quality-checklist.md        the consolidated pre-ship checklist
+│   └── experience-modes.md         campus/school tours, product showcases,
+│                                    architectural walkthroughs — scenes and
+│                                    interactions specific to each
 ├── scripts/
 │   ├── scaffold_project.py         generates a working starter project
-│   └── verify_scroll_page.mjs      headless-browser scroll verification (Playwright)
+│   ├── verify_scroll_page.mjs      headless-browser scroll verification (Playwright)
+│   └── audit_assets.py             scans model/texture/video sizes, flags
+│                                    oversized files, can emit a starter
+│                                    ASSET_LICENSES.md manifest
 └── assets/
     └── starter-unified/            a checked-in copy of what the scaffold produces
 ```
