@@ -1,0 +1,28 @@
+{
+  "name": "starter-unified",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.169.0",
+    "@react-three/fiber": "^8.17.10",
+    "@react-three/drei": "^9.114.3",
+    "gsap": "^3.12.5",
+    "motion": "^11.11.17",
+    "@react-spring/three": "^9.7.5",
+    "@react-three/postprocessing": "^2.16.3",
+    "postprocessing": "^6.36.4",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^5.4.10"
+  }
+}

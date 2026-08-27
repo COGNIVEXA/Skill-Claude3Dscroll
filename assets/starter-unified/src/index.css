@@ -1,0 +1,66 @@
+:root {
+  --bg: #0a0a0c;
+  --surface: #16161a;
+  --text: #f2f1ee;
+  --text-secondary: #a6a3ab;
+  --border: #2a2a30;
+  --accent: #ff6b35;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-8: 32px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-40: 160px;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+.app { position: relative; }
+
+canvas { position: fixed; inset: 0; z-index: 0; }
+
+.overlay {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.overlay a, .overlay button { pointer-events: auto; }
+
+section {
+  min-height: 100vh;
+  padding: var(--space-24) clamp(20px, 6vw, var(--space-40));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0 0 var(--space-4);
+}
+
+h1 { font-size: clamp(40px, 8vw, 96px); }
+h2 { font-size: clamp(28px, 4vw, 48px); }
+
+p {
+  max-width: 65ch;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: clamp(16px, 1.4vw, 19px);
+  margin: 0;
+}
+
+[data-qa-track] { will-change: opacity, transform; }
